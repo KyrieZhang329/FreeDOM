@@ -11,7 +11,7 @@
 #include <pcl/point_cloud.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <visualization_msgs/msg/marker.hpp>
-#include <cv_bridge/cv_bridge.hpp>
+#include <cv_bridge/cv_bridge.h>
 #include <geometry_msgs/msg/point.h>
 #include <sensor_msgs/msg/image.hpp>
 
