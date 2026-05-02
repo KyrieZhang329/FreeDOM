@@ -33,7 +33,7 @@ All rosbags can be found [here](https://drive.google.com/drive/folders/1fIDHxXvz
 
 - When running KITTI seq.01 (high-speed scenario), `counts_to_free` should be set to 3 to enable faster free space estimation.
 
-- It is recommended to use `run_freedom_indoor.launch` for Indoor datasets for better visualization.
+- It is recommended to use `run_freedom_indoor.launch.py` for Indoor datasets for better visualization.
 
 Save the generated static map:
 ```bash
