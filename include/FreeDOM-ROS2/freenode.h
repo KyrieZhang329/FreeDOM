@@ -5,8 +5,6 @@
 #ifndef FREENODE_H
 #define FREENODE_H
 #include <rclcpp/rclcpp.hpp>
-#include <rclcpp/callback_group.hpp>
-#include <thread>
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/buffer.h>
@@ -32,10 +30,6 @@ namespace freedom{
         std::string map_tf_frame;
         std::string sensor_tf_frame;
 
-        rclcpp::CallbackGroup::SharedPtr mapping_callback_group_;
-        std::shared_ptr<rclcpp::executors::SingleThreadedExecutor> mapping_executor_;
-        std::thread thread;
-
         std::string pointcloud_topic;
         rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr pointcloud_sub;
 
@@ -47,7 +41,6 @@ namespace freedom{
         std::shared_ptr<tf2_ros::TransformListener> tf_listener;
 
         void get_params(FreeDOM::Config& map_config, Visualizer::Config& vis_config);
-        void mapping_thread();
         void pointcloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr pointcloud);
         void save_map_callback(const std_msgs::msg::Empty::SharedPtr msg);
 

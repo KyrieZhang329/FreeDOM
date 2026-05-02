@@ -16,18 +16,6 @@ FreeNode::FreeNode():Node("free_node")
 
     // 设置FreeDOM与visualizer的config
     static_map.set_params(map_config);
-    mapping_callback_group_ = this->create_callback_group(
-        rclcpp::CallbackGroupType::MutuallyExclusive);
-
-    // 使用回调组创建订阅
-    rclcpp::SubscriptionOptions options;
-    options.callback_group = mapping_callback_group_;
-
-    pointcloud_sub = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-        pointcloud_topic,
-        rclcpp::QoS(100),
-        std::bind(&FreeNode::pointcloud_callback, this, std::placeholders::_1),
-        options);  // 加入 options 参数
     if(enable_visualization) visualizer.set_params(vis_config,*this);
 
     // 设置可视化回调
@@ -44,11 +32,6 @@ FreeNode::FreeNode():Node("free_node")
             visualizer.visualize_map_removal_result(map);});
     }
 
-    // 为建图线程设置独立回调队列
-    mapping_callback_group_ = this->create_callback_group(
-    rclcpp::CallbackGroupType::MutuallyExclusive);
-
-    // 设置订阅
     tf_buffer = std::make_unique<tf2_ros::Buffer>(this->get_clock());
     tf_listener = std::make_shared<tf2_ros::TransformListener>(*tf_buffer);
 
@@ -61,15 +44,9 @@ FreeNode::FreeNode():Node("free_node")
         save_map_topic,
         10,
         std::bind(&FreeNode::save_map_callback, this, std::placeholders::_1));
-    // 启动建图线程
-    thread = std::thread(&FreeNode::mapping_thread, this);
 }
 
-FreeNode::~FreeNode()
-{
-    if (thread.joinable())
-        thread.join();
-}
+FreeNode::~FreeNode() = default;
 
 void FreeNode::get_params(FreeDOM::Config& map_config, Visualizer::Config& vis_config)
 {
@@ -205,30 +182,6 @@ void FreeNode::get_params(FreeDOM::Config& map_config, Visualizer::Config& vis_c
     vis_config.voxel_depth = this->get_parameter("map.voxel_depth").as_int();
     vis_config.block_depth = this->get_parameter("map.block_depth").as_int();
     vis_config.enable_raycast_enhancement = this->get_parameter("raycast_enhancement.enable_raycast_enhancement").as_bool();
-}
-
-    void FreeNode::mapping_thread()
-{
-    // ROS2 的线程安全检查
-    if (!rclcpp::ok()) {
-        return;
-    }
-    // 使用执行器替代 callAvailable
-    // 这个执行器将处理分配给 mapping_callback_group_ 的所有回调
-    try {
-        RCLCPP_INFO(this->get_logger(), "Mapping thread started");
-        // 添加安全检查
-        if (!mapping_executor_) {
-            RCLCPP_ERROR(this->get_logger(), "Mapping executor not initialized!");
-            return; // 如果执行器为空，立即返回
-        }
-        rclcpp::spin(this->get_node_base_interface());
-        RCLCPP_INFO(this->get_logger(), "Mapping thread stopped");
-    } catch (const std::exception &e) {
-        RCLCPP_ERROR(this->get_logger(), "Exception in mapping thread: %s", e.what());
-    }catch (...) {
-        RCLCPP_ERROR(this->get_logger(), "Unknown exception in mapping thread");
-    }
 }
 
     void FreeNode::pointcloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr pointcloud)
