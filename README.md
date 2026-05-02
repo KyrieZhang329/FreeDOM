@@ -18,7 +18,7 @@ This branch (`ros2-humble`) is a port of the upstream ROS 2 Jazzy version to **R
 - `package.xml` dependency declarations brought in line with `CMakeLists.txt`.
 - Removed the obsolete `include/freedom/` header tree.
 
-Tested on Ubuntu 22.04 + ROS 2 Humble.
+We have tested it on Ubuntu 22.04 + ROS 2 Humble.
 
 ## 1. Build
 
