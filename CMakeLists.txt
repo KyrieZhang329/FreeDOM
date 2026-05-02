@@ -57,8 +57,31 @@ ament_target_dependencies(freedom_node
         tf2_eigen
         tf2_eigen_kdl
 )
+
+add_executable(ground_truth_generate src/evaluate_tools/ground_truth_generate.cpp)
+ament_target_dependencies(ground_truth_generate
+        rclcpp
+        geometry_msgs
+        PCL
+        pcl_conversions
+        sensor_msgs
+        std_msgs
+        tf2_ros
+)
+target_link_libraries(ground_truth_generate ${PCL_LIBRARIES})
+
+add_executable(static_map_evaluate src/evaluate_tools/static_map_evaluate.cpp)
+ament_target_dependencies(static_map_evaluate
+        rclcpp
+        geometry_msgs
+        PCL
+)
+target_link_libraries(static_map_evaluate ${PCL_LIBRARIES})
+
 install(TARGETS
         freedom_node
+        ground_truth_generate
+        static_map_evaluate
         DESTINATION lib/${PROJECT_NAME}
 )
 install(DIRECTORY
