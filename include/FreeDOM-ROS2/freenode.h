@@ -7,12 +7,12 @@
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp/callback_group.hpp>
 #include <thread>
-#include <sensor_msgs/msg/point_cloud.h>
+#include <sensor_msgs/msg/point_cloud2.hpp>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/buffer.h>
 #include <pcl/point_cloud.h>
 #include <pcl_conversions/pcl_conversions.h>
-#include <geometry_msgs/msg/transform_stamped.h>
+#include <geometry_msgs/msg/transform_stamped.hpp>
 #include <std_msgs/msg/empty.hpp>
 
 #include <FreeDOM-ROS2/freedom.h>

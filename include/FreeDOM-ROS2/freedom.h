@@ -7,7 +7,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <pcl/point_cloud.h>
-#include <geometry_msgs/msg/transform_stamped.h>
+#include <geometry_msgs/msg/transform_stamped.hpp>
 #include <pcl_conversions/pcl_conversions.h>
 #include <Eigen/Eigen>
 #include <future>
