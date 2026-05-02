@@ -29,8 +29,7 @@ public:
         param.getParam<std::string>("save_map_topic", save_map_topic_);
         param.getParam<std::string>("save_map_path", save_map_path_);
         param.getParam<bool>("enable_save_frame", enable_save_frame_, false);
-        this->declare_parameter<std::string>("save_frame_path", "");
-        save_frame_path_ = this->get_parameter("save_frame_path").as_string();
+        param.getParam<std::string>("save_frame_path", save_frame_path_, std::string(""));
 
         min_range_squared_ = min_range_ * min_range_;
         max_range_squared_ = max_range_ * max_range_;

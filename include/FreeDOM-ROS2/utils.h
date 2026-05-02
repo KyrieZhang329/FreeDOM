@@ -7,6 +7,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <unordered_map>
+#include <sstream>
 #include <Eigen/Eigen>
 #include <geometry_msgs/msg/transform_stamped.hpp>
 
@@ -32,8 +33,10 @@ public:
 
         // 检查是否使用了默认值
         if (node_.get_parameter(param_name).get_value<T>() == default_value) {
+            std::ostringstream oss;
+            oss << default_value;
             RCLCPP_WARN(node_.get_logger(), "param missing: %s, set default: %s",
-                        param_name.c_str(), std::to_string(default_value).c_str());
+                        param_name.c_str(), oss.str().c_str());
         }
 
         return;
