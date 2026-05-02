@@ -37,7 +37,7 @@ All rosbags can be found [here](https://drive.google.com/drive/folders/1fIDHxXvz
 
 Save the generated static map:
 ```bash
-rostopic pub /save_map std_msgs/Empty "{}" -1
+ros2 topic pub /save_map std_msgs/msg/Empty "{}" -1
 ```
 The static map will be saved by default at `./generated_pcd`.
 
