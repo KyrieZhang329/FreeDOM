@@ -74,6 +74,7 @@ private:
                 tf_buffer_->lookupTransform(map_tf_frame_, sensor_tf_frame_, transform_time);
 
             Eigen::Isometry3d transform;
+            transformfromTFToEigen(transformStamped, transform);
             Eigen::Vector3d point_pos_transformed;
 
             pcl::PointCloud<pcl::PointXYZ> frame_pc;
@@ -85,7 +86,6 @@ private:
 
                 Eigen::Vector3d point_pos(point.x, point.y, point.z);
 
-                transformfromTFToEigen(transformStamped, transform);
                 point_pos_transformed = transform * point_pos;
 
                 double range_squared = (point_pos_transformed - transform.translation()).squaredNorm();

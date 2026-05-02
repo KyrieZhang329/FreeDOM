@@ -268,7 +268,7 @@ void FreeNode::get_params(FreeDOM::Config& map_config, Visualizer::Config& vis_c
     static_map.pointcloud_integrate(cloud, transform);
 }
 
-    void FreeNode::save_map_callback(const std_msgs::msg::Empty::SharedPtr msg)
+    void FreeNode::save_map_callback(const std_msgs::msg::Empty::SharedPtr /*msg*/)
 {
     RCLCPP_INFO(this->get_logger(), "Received save map trigger. Saving map...");
     static_map.save_map(save_map_path);
